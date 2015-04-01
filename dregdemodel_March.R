@@ -5,14 +5,32 @@ library(rgdal)
 library(dismo)
 library(SDMTools)
 
+# Created by:    Joseph Maina
+# Created:       25 March 2015
+# Last modified: 1 April 2015
+# Purpose:       analysis of multiband climate wavelets from ERSSTv4 data        
+
+#Emily's dropbox
+setwd("/Users/emilydarling/Dropbox/1-On the go/Coral Database/PaperZero/Analysis/world/SSTanom_from1910_ERSSTv4/")   
+
+#Maina's dropbox     
 setwd("~/Dropbox/PaperZero/Analysis/world/SSTanom_from1910_ERSSTv4/")
+
 bl<-read.csv('CoralBleaching.csv')
 head(bl)
 
 
 ##lh<-read.csv('data.csv')
-
 wv<-list.files(pattern=".updated.nc$")
+##[2015-03-14, 10:22:23 PM] Maina: wv<-list.files(pattern='nc')
+##[2015-03-14, 10:22:34 PM] Maina: that just lists all the files with nc extension
+##then the file we want is position 9  
+##but THIS POSITION CAN CHANGE, check [#] - which changes as we add more nc files     
+###load the netcdf file as a multiband image with wavelet variables   
+##[2015-03-14, 10:19:34 PM] Maina: it doesn't like the nc file to be called dirctly
+##[2015-03-14, 10:20:37 PM] Maina: so we have to use for example wv[9] to call the wavelet rasterstack
+names(wv)                                                                
+  
 names<-stack(wv) ##get names
 period_max<-raster(wv[1], varname="period_max")
 pct_signif_periodmax<-raster(wv[1], varname="pct_signif_periodmax")
@@ -48,8 +66,11 @@ autocorr_trend<-raster(wv[1], varname="autocorr_trend")
 events_pos_all_trend<-raster(wv[1], varname="events_pos_all_trend")
 maxpower_events_pos_trend<-raster(wv[1], varname="maxpower_events_pos_trend")
 
+##this creates a rasterstack of all the images loaded above.the names between the parethesis should match the names of rasters loaded above
+##all.var below is a rasterstack of wavelet variables  
 all.var<-stack(period_max, pct_signif_periodmax, pct_coi_periodmax, pct_ispos_signif, events_pos_periodmax, events_neg_periodmax, events_pos_all, events_neg_all, maxpower_pos, maxpower_neg, maxpower_events_pos, maxpower_events_neg, maxpower_pos_norm, maxpower_neg_norm, maxpower_events_pos_norm, maxpower_events_neg_norm, period_events_pos, period_events_neg, duration_events_pos, duration_events_neg, meanSST, varSST, trendSST, var_seasonal, pct_seasonal, autocorr, NSE, diff_events_periodmax, diff_events_all, NSE_trend, autocorr_trend, events_pos_all_trend, maxpower_events_pos_trend)
 
+##the following sections will calculate DHM and add to the rasterstack above    
 ##Accumulate DHM (1910-1990) based on climatology from 1910-1940
 ersst<-list.files(pattern="nc")
 
@@ -58,10 +79,12 @@ ersst<-list.files(pattern="nc")
 #"climatology_ERSSTv4_1910to1939.nc" = monthly climatology
 ##mmm is calculated as a maximum of monthly climatology 
 
+#load the ERSST files 
 mmm_a<-max(stack("climatology_ERSSTv4_1910to1939.nc" ))
 mmm_b<-max(stack("climatology_ERSSTv4_1960to1990.nc" ))
 sstts<-stack("ERSST_v4_1910to1990.nc")
 
+##Calculate MMM based anomalies       
 #anom_a<-sstts - (mmm_a + 1) #anom based on 1910-1939 clim
 #anom_b<-sstts - (mmm_b + 1)#anom based on 1960-1990 clim
 anom_a<-sstts - (mmm_a) #anom based on 1910-1939 clim

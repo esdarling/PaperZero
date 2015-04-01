@@ -1,4 +1,4 @@
-rm(list=ls())
+
 library(rgeos)
 library(raster)
 library(rgdal)
@@ -10,64 +10,80 @@ library(ncdf4)
 library(ggplot2) 
 library(plyr) 
 
+# Made a meta-data chunk ala Sean Anderson 
+# Created by:    Emily S. darling
+# Created:       15 March 2015
+# Last modified: 1 April 2015
+# Purpose:       global plots of climate variables and histograms of their distributions across reef pixels 
 
+#Emily's Dropbox
 setwd("/Users/emilydarling/Dropbox/1-On the go/Coral Database/PaperZero/Analysis/world/SSTanom_from1910_ERSSTv4/")
 
-wv2<-list.files(pattern='nc')   
-names(wv2)[1]       
+#use open.ncdf to open a .nc file and list stack of raster variables
+nc <- open.ncdf("stats_ERSSTv4_updated.nc")
+names(nc$var) 
+
+#not sure why all.var.reef.nc doesn't have raster stack in it
+#can remake later
+#nc <- open.ncdf("all.var.reef.nc")
+#names(nc$var) 
+
+# TO DO
+# 1. read in predicted bleaching layer
+bl_pred <- raster("TopmodelPredmapMask.tif")
+print(bl_pred)
+histogram(bl_pred)   
+plot(bl_pred)
+
+#convert raster to points for ggplot
+bl_pred.p <- rasterToPoints(bl_pred) 
+  
+#Make the points a dataframe for ggplot
+df <- data.frame(bl_pred.p)  
+
+#Make appropriate column headings
+colnames(df) <- c("Longitude", "Latitude", "MAP")
+
+#recenter longitude to match pacific-centred world map 
+#note center needs to be set the same here and in 0-global-base-map.R
+center <- 115
+df$long.recenter <-  ifelse(df$Longitude<center-180, df$Longitude+360, df$Longitude)
+head(df)   
+hist(df$long.recenter)    
+     
+
+# 2. Read in predictor variables cropped to reef pixels
+# code below isn't work yet but placeholder for top variables from dredge models, AIC < 4
+#autocorr<-raster(wv2[1], varname="autocorr")  
+#diff_events_all<-raster(wv[1], varname="diff_events_all") 
+#diff_events_periodmax<-raster(wv[1], varname="diff_events_periodmax")  
+#events_pos_all<-raster(wv[1], varname="events_pos_all")     
+#NSE<-raster(wv[1], varname="NSE")    
+
+#read in Pacific-centred base layer map
+#holy smokes source is cool (thanks Sean Anderson!)
+setwd("/Users/emilydarling/Documents/Work/GitHub/PaperZero")  
+source("0-global-base-map.R")
+
+#add raster to base map layer in ggplot  
+#change colours and fills in geom_polygon
+# change fill of land, country lines, colour of background 
+dev.new(width = 5, height = 3)
+base <- ggplot() +
+  geom_polygon(aes(long.recenter,lat,group=group.regroup), 
+		size = 0.2, fill="white", colour = "grey95", data=worldmap) +
+  ylim(-60, 90) +
+  coord_equal() + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + 
+  geom_raster(aes(long.recenter, Latitude, fill = MAP), data = df) +
+  scale_fill_gradient("Bleaching probability", limits = c(0,1), low = "blue", high = "red")       
+base 
+
+        
 
 
-ncin <- open.ncdf("all.var.DHM.reef_15Mar2015.nc")
-print(ncin)
-
-#read in top predictors from models
-autocorr<-raster(wv2[1], varname="autocorr")  
-diff_events_all<-raster(wv[1], varname="diff_events_all") 
-diff_events_periodmax<-raster(wv[1], varname="diff_events_periodmax")  
-events_pos_all<-raster(wv[1], varname="events_pos_all")     
-NSE<-raster(wv[1], varname="NSE")    
 
 
-# =================================
-# = ggplot Pacific recentred map  =
-# =================================  
-#http://web.stanford.edu/~cengel/cgi-bin/anthrospace/great-circles-on-a-recentered-worldmap-in-ggplot
-center <- 115 # positive values only - US centered view is 260
-# shift coordinates to recenter worldmap
-worldmap <- map_data ("world")
-worldmap$long.recenter <-  ifelse(worldmap$long  < center - 180 , worldmap$long + 360, worldmap$long)
- 
-### Function to regroup split lines and polygons
-# takes dataframe, column with long and unique group variable, returns df with added column named group.regroup
-RegroupElements <- function(df, longcol, idcol){  
-  g <- rep(1, length(df[,longcol]))
-  if (diff(range(df[,longcol])) > 300) {          # check if longitude within group differs more than 300 deg, ie if element was split
-    d <- df[,longcol] > mean(range(df[,longcol])) # we use the mean to help us separate the extreme values
-    g[!d] <- 1     # some marker for parts that stay in place (we cheat here a little, as we do not take into account concave polygons)
-    g[d] <- 2      # parts that are moved
-  }
-  g <-  paste(df[, idcol], g, sep=".") # attach to id to create unique group variable for the dataset
-  df$group.regroup <- g
-  df
-}
- 
-### Function to close regrouped polygons
-# takes dataframe, checks if 1st and last longitude value are the same, if not, inserts first as last and reassigns order variable
-ClosePolygons <- function(df, longcol, ordercol){
-  if (df[1,longcol] != df[nrow(df),longcol]) {
-    tmp <- df[1,]
-    df <- rbind(df,tmp)
-  }
-  o <- c(1: nrow(df))  # rassign the order variable
-  df[,ordercol] <- o
-  df
-}
- 
-# now regroup
-worldmap.rg <- ddply(worldmap, .(group), RegroupElements, "long.recenter", "group")
- 
-# close polys
-worldmap.cp <- ddply(worldmap.rg, .(group.regroup), ClosePolygons, "long.recenter", "order")  # use the new grouping var
 
 # ================
 # = test raster  =
