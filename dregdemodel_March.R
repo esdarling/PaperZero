@@ -5,6 +5,7 @@ library(rgdal)
 library(dismo)
 library(SDMTools)
 
+
 # Created by:    Joseph Maina
 # Created:       25 March 2015
 # Last modified: 1 April 2015
