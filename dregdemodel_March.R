@@ -150,6 +150,18 @@ if (require(ncdf)) {
  maskedvar <- writeRaster(all.var.reef, filename='all.var.reef.nc', format="CDF", overwrite=TRUE)   
 }
 
+###the above file is now written to file 
+##to read it call the respectve libraries
+#load the file
+my.masked.variables<-stack('all.var.reef.nc')
+
+#to see the names of the variables
+names(my.masked.variables)
+
+#select one variable from the stack 
+NSE<-raster(my.masked.variables, "NSE")
+##to semect a few variables
+var.subset<-stack(my.masked.variables, c("NSE","autocorr"))
 
 
 
@@ -467,7 +479,6 @@ reef.layer<-rotate(reef.layer)
 resample_topmodel.pred.map <- resample(topmodel.pred.map, reef.layer, method='bilinear')
 topmodel.pred.map_fin<-mask(resample_topmodel.pred.map, reef.layer)
 writeRaster(topmodel.pred.map_fin, filename="TopmodelPredmapMask.tif", format="GTiff", overwrite=TRUE)
-
 
 
 
