@@ -1,0 +1,850 @@
+library(plyr)#
+library(reshape2)#
+library(graphics)#
+library(ggplot2)#
+library(RColorBrewer)#
+library(car)#
+library(stats)#
+library(nlme)#
+library(glmulti)#
+library(gdata)#
+library(foreign)
+p <- data.frame(year = c(2004:2007), p_Female = c(34,40,31,32))#
+#
+dev.new(width = 2, height = 4)#
+ggplot(data = p, aes(x = year, y = p_Female)) + #
+	geom_point(size = 3) + geom_line()#
+last_plot () + scale_y_continuous(limits=c(0,45), expand=c(0,0))#
+#
+last_plot() + theme_bw(base_size=22) +#
+	theme(panel.grid.minor=element_blank(), #
+ 		panel.grid.major=element_blank(),#
+		axis.title.x=element_blank(), #
+ 		axis.title.y=element_blank(),#
+		axis.text.x=element_blank(),#
+		axis.text.y=element_blank(),#
+ 		panel.background=element_rect(fill=NA),#
+ 		panel.border=element_rect(fill=NA),#
+		plot.background=element_rect(fill=NA))
+ggplot(aes(x = "04-07", y = 34.3)) + #
+	geom_pointrange(size = 3, aes(ymax = 34.3 + 4.03, ymin = 34.3 - 4.03))#
+last_plot () + scale_y_continuous(limits=c(0,45), expand=c(0,0))
+dev.new(width = 2, height = 4)#
+ggplot(aes(x = "04-07", y = 34.3)) + geom_point()
+p2 <- data.frame(year = "04-07", p_Female = 34.3)
+p2
+dev.new(width = 2, height = 4)#
+ggplot(data=p2, aes(x = year, y = p_Female)) + geom_point()#
+	geom_pointrange(size = 3, aes(ymax = p_Female + 4.03, ymin = p_Female - 4.03))#
+last_plot () + scale_y_continuous(limits=c(0,45), expand=c(0,0))
+dev.new(width = 2, height = 4)#
+ggplot(data=p2, aes(x = year, y = p_Female)) + #
+	geom_pointrange(size = 3, aes(ymax = p_Female + 4.03, ymin = p_Female - 4.03))#
+last_plot () + scale_y_continuous(limits=c(0,45), expand=c(0,0))
+dev.new(width = 2, height = 4)#
+ggplot(data=p2, aes(x = year, y = p_Female)) + #
+	geom_pointrange(aes(ymax = p_Female + 4.03, ymin = p_Female - 4.03))#
+last_plot () + scale_y_continuous(limits=c(0,45), expand=c(0,0))#
+#
+last_plot() + theme_bw(base_size=22) +#
+	theme(panel.grid.minor=element_blank(), #
+ 		panel.grid.major=element_blank(),#
+		axis.title.x=element_blank(), #
+ 		axis.title.y=element_blank(),#
+		axis.text.x=element_blank(),#
+		axis.text.y=element_blank(),#
+ 		panel.background=element_rect(fill=NA),#
+ 		panel.border=element_rect(fill=NA),#
+		plot.background=element_rect(fill=NA))
+ggplot(data=p2, aes(x = year, y = p_Female)) + #
+	geom_pointrange(size = 2, aes(ymax = p_Female + 4.03, ymin = p_Female - 4.03))#
+last_plot () + scale_y_continuous(limits=c(0,45), expand=c(0,0))#
+#
+last_plot() + theme_bw(base_size=22) +#
+	theme(panel.grid.minor=element_blank(), #
+ 		panel.grid.major=element_blank(),#
+		axis.title.x=element_blank(), #
+ 		axis.title.y=element_blank(),#
+		axis.text.x=element_blank(),#
+		axis.text.y=element_blank(),#
+ 		panel.background=element_rect(fill=NA),#
+ 		panel.border=element_rect(fill=NA),#
+		plot.background=element_rect(fill=NA))
+ggplot(data=p2, aes(x = year, y = p_Female)) + #
+	geom_pointrange(size = 1, aes(ymax = p_Female + 4.03, ymin = p_Female - 4.03))#
+last_plot () + scale_y_continuous(limits=c(0,45), expand=c(0,0))#
+#
+last_plot() + theme_bw(base_size=22) +#
+	theme(panel.grid.minor=element_blank(), #
+ 		panel.grid.major=element_blank(),#
+		axis.title.x=element_blank(), #
+ 		axis.title.y=element_blank(),#
+		axis.text.x=element_blank(),#
+		axis.text.y=element_blank(),#
+ 		panel.background=element_rect(fill=NA),#
+ 		panel.border=element_rect(fill=NA),#
+		plot.background=element_rect(fill=NA))
+dev.new(width = 1, height = 4)#
+ggplot(data=p2, aes(x = year, y = p_Female)) + #
+	geom_pointrange(size = 1, aes(ymax = p_Female + 4.03, ymin = p_Female - 4.03))#
+last_plot () + scale_y_continuous(limits=c(0,45), expand=c(0,0))#
+#
+last_plot() + theme_bw(base_size=22) +#
+	theme(panel.grid.minor=element_blank(), #
+ 		panel.grid.major=element_blank(),#
+		axis.title.x=element_blank(), #
+ 		axis.title.y=element_blank(),#
+		axis.text.x=element_blank(),#
+		axis.text.y=element_blank(),#
+ 		panel.background=element_rect(fill=NA),#
+ 		panel.border=element_rect(fill=NA),#
+		plot.background=element_rect(fill=NA))
+install.packages("FD")
+library(FD)
+grid.arrange(C, ST, G, W, ncol = 2)
+dad_grades <- c(28,30,35,40,41,43,48,50,50,50,53,56,58,59,61,61,61,63,63,65,66,66,68,69,75,76,76,77,78,81,83,86)
+hist(dad_grades)
+hist(dad_grades, xlab = "Grade", ylab = "Frequency")
+hist(dad_grades, xlab = "Grade", ylab = "Frequency", main = "Midterm marks")
+dad_grades2 <- c(45,45,45,45,45,43,48,50,50,50,53,56,58,59,61,61,61,63,63,65,66,66,68,69,75,76,76,77,78,81,83,86)
+hist(dad_grades2, xlab = "Grade", ylab = "Frequency", main = "Midterm marks")
+ggplot(aes(x = dad_grades2))  + #
+	geom_hist()
+library(plyr)#
+library(reshape2)#
+library(graphics)#
+library(ggplot2)#
+library(RColorBrewer)#
+library(car)#
+library(stats)#
+library(nlme)#
+library(glmulti)#
+library(gdata)#
+library(foreign)
+ggplot(aes(x = dad_grades2))  + #
+	geom_hist()
+ggplot(aes(x = as.numeric(dad_grades2)))  + #
+	geom_hist()
+is.numeric(dad_grades2)
+ggplot(aes(x = dad_grades2))  + #
+	geom_histogram(binwidth = 5)
+x$dad_grades2 <- c(45,45,45,45,45,43,48,50,50,50,53,56,58,59,61,61,61,63,63,65,66,66,68,69,75,76,76,77,78,81,83,86)
+dad <- data.frame(id = student, grades = dad_grades)
+student <- c(1:32)#
+dad_grades <- c(28,30,35,40,41,43,48,50,50,50,53,56,58,59,61,61,61,63,63,65,66,66,68,69,75,76,76,77,78,81,83,86)#
+dad <- data.frame(id = student, grades = dad_grades)
+head(dad)
+ggplot(aes(x = grades), data = dad)  + #
+	geom_histogram(binwidth = 5)
+dad$grades2 <- ifelse(dad$grades < 50, 48, dad$grades)
+hist(dad$grades2)
+hist(dad$grades2, colour = "blue")
+hist(dad$grades2, fill = "blue")
+hist(dad$grades2, col = "blue")
+hist(dad$grades2, col = "blue", xlab = "Grade", main = "Midterm marks")
+library(plyr)#
+library(reshape2)#
+library(graphics)#
+library(ggplot2)#
+library(RColorBrewer)#
+library(car)#
+library(glmulti)#
+library(gdata)#
+library(gtools)#
+library(taxize) #
+library(RJSONIO)#
+library(jsonlite)#
+library(reports)#
+#
+# ============#
+# = IN EXCEL#
+#find/replace CF. and cf. with blanks        =#
+# ============#
+#
+# =========================#
+# = CLEANING CORAL NAMES  =#
+# =========================#
+setwd("/Users/emilydarling/Dropbox/1-On the go/Coral Database/1_FULLDATA/FULL DATA")#
+d0 <- read.csv("CoralData_compiled_3Nov2014.csv", header = TRUE, stringsAsFactors = FALSE, strip.white = TRUE)   #
+head(d0)#
+nrow(d0)#
+names(d0)[4] <- "Genus_original"#
+str(d0)   #
+levels(as.factor(d0$Source))    #
+levels(as.factor(d0$Genus_original))    #
+levels(as.factor(d0$Species))    #
+length(levels(as.factor(d0$Site)))
+library(rgdal)#
+library(ggplot2)#
+library(ggmap)  #
+library(fields)     #
+library(maps)  #
+library(mapdata)
+map("world2Hires", regions=mapnames$names[c(1:7,14:641)],#
+    xlim=c(120, 260), #
+    ylim=c(-60, 40), #
+    boundary=TRUE, #
+    interior=TRUE,#
+    fill=TRUE#
+)
+map("world2Hires",#
+    boundary=TRUE, #
+    interior=TRUE,#
+    fill=TRUE#
+)
+library(maps)#
+library(mapproj)#
+library(mapdata)#
+#
+mapnames <- map("world2Hires", xlim=c(120, 260), ylim=c(-60, 40),#
+                fill=TRUE, plot=FALSE)#
+#
+mapnames2 <- map("world2Hires", xlim=c(100, 200), ylim=c(-20, 60),#
+                 fill=TRUE, plot=FALSE)#
+#
+mapnames$names[10]#
+[1] "Mali"#
+mapnames2$names[10]#
+[1] "Thailand"
+remove <- c("UK:Great Britain", "France", "Spain", "Algeria", "Mali",#
+            "Burkina Faso", "Ghana", "Togo")#
+#
+map("world2Hires", regions=mapnames$names[!(mapnames$names %in% remove)],#
+    xlim=c(120, 260), #
+    ylim=c(-60, 40), #
+    boundary=TRUE, #
+    interior=TRUE,#
+    fill=TRUE#
+)
+mapnames <- map("world2Hires", fill=TRUE, plot=FALSE)
+mapnames <- map("world2Hires", fill=TRUE, plot=FALSE)#
+remove <- c("UK:Great Britain", "France", "Spain", "Algeria", "Mali",#
+            "Burkina Faso", "Ghana", "Togo")#
+map("world2Hires", regions=mapnames$names[!(mapnames$names %in% remove)],#
+    boundary=TRUE, #
+    interior=TRUE,#
+    fill=TRUE)
+map("world2Hires", regions=mapnames$names[!(mapnames$names %in% remove)],#
+    xlim = c(-10,300), ylim = c(-50,50), #
+	boundary=TRUE, interior=TRUE, fill=TRUE)
+map("world2Hires", regions=mapnames$names[!(mapnames$names %in% remove)],#
+	boundary=TRUE, interior=TRUE, fill=TRUE)
+map("world2Hires", regions=mapnames$names[!(mapnames$names %in% remove)],col = grey90,#
+	boundary=TRUE, interior=TRUE, fill=TRUE)
+map("world2Hires", regions=mapnames$names[!(mapnames$names %in% remove)],col = "grey90",#
+	boundary=TRUE, interior=TRUE, fill=TRUE)
+map("world2Hires", regions=mapnames$names[!(mapnames$names %in% remove)],col = "black"#
+	boundary=TRUE, interior=TRUE, fill=TRUE)
+map("world2Hires", regions=mapnames$names[!(mapnames$names %in% remove)],col = "black",#
+	boundary=TRUE, interior=TRUE, fill=TRUE)
+?map
+map("world2Hires", regions=mapnames$names[!(mapnames$names %in% remove)],col = "black",#
+	boundary=FALSE, interior=TRUE, fill=TRUE)
+map("world2Hires", regions=mapnames$names[!(mapnames$names %in% remove)],col = "grey80",#
+	boundary=FALSE, interior=TRUE, fill=TRUE)
+map("world2Hires", regions=mapnames$names[!(mapnames$names %in% remove)],col = "grey80",#
+	boundary=FALSE, interior=TRUE, fill=FALSE)
+map("world2Hires", regions=mapnames$names[!(mapnames$names %in% remove)],col = "black",#
+	boundary=FALSE, interior=TRUE, fill=FALSE)
+map("world2Hires", regions=mapnames$names[!(mapnames$names %in% remove)],col = "black",#
+	boundary=TRUE, interior=TRUE, fill=FALSE)
+map("world2Hires", regions=mapnames$names[!(mapnames$names %in% remove)],col = "grey50",#
+	boundary=TRUE, interior=FALSE, fill=TRUE)
+map("world2Hires", regions=mapnames$names[!(mapnames$names %in% remove)],col = "grey50", border = "red,"#
+	fill=TRUE)
+map("world2Hires", regions=mapnames$names[!(mapnames$names %in% remove)],col = "grey50", border = "red",#
+	fill=TRUE)
+map("world2Hires", regions=mapnames$names[!(mapnames$names %in% remove)],col = "grey80", border = "grey80",#
+	fill=TRUE)
+library(rgeos)#
+library(raster)#
+library(rgdal)#
+library(dismo)#
+library(SDMTools)#
+library(rasterVis) #
+library(ncdf) #
+library(ncdf4) #
+library(ggplot2) #
+library(plyr)
+Emily's Dropbox#
+setwd("/Users/emilydarling/Dropbox/1-On the go/Coral Database/PaperZero/Analysis/world/SSTanom_from1910_ERSSTv4/")#
+#
+#use open.ncdf to open a .nc file and list stack of raster variables#
+nc <- open.ncdf("stats_ERSSTv4_updated.nc")#
+names(nc$var)
+Emily's Dropbox#
+setwd("/Users/emilydarling/Dropbox/1-On the go/Coral Database/PaperZero/Analysis/world/SSTanom_from1910_ERSSTv4/")#
+#
+#use open.ncdf to open a .nc file and list stack of raster variables#
+nc <- open.ncdf("stats_ERSSTv4_updated.nc")#
+names(nc$var) #
+#
+#not sure why all.var.reef.nc doesn't have raster stack in it#
+#can remake later#
+#nc <- open.ncdf("all.var.reef.nc")#
+#names(nc$var) #
+#
+# TO DO#
+# 1. read in predicted bleaching layer#
+bl_pred <- raster("TopmodelPredmapMask.tif")#
+print(bl_pred)#
+histogram(bl_pred)   #
+plot(bl_pred)
+convert raster to points for ggplot#
+bl_pred.p <- rasterToPoints(bl_pred) #
+#Make the points a dataframe for ggplot#
+df <- data.frame(bl_pred.p)  #
+#
+#Make appropriate column headings#
+colnames(df) <- c("Longitude", "Latitude", "MAP")#
+#
+#recenter longitude to match pacific-centred world map #
+#note center needs to be set the same here and in 0-global-base-map.R#
+center <- 115#
+df$long.recenter <-  ifelse(df$Longitude<center-180, df$Longitude+360, df$Longitude)#
+head(df)   #
+hist(df$long.recenter)    #
+# 2. Read in predictor variables cropped to reef pixels#
+# code below isn't work yet but placeholder for top variables from dredge models, AIC < 4#
+#autocorr<-raster(wv2[1], varname="autocorr")  #
+#diff_events_all<-raster(wv[1], varname="diff_events_all") #
+#diff_events_periodmax<-raster(wv[1], varname="diff_events_periodmax")  #
+#events_pos_all<-raster(wv[1], varname="events_pos_all")     #
+#NSE<-raster(wv[1], varname="NSE")    #
+#
+#read in Pacific-centred base layer map#
+#holy smokes source is cool (thanks Sean Anderson!)#
+setwd("/Users/emilydarling/Documents/Work/GitHub/PaperZero")  #
+source("0-global-base-map.R")#
+#
+#add raster to base map layer in ggplot  #
+#change colours and fills in geom_polygon#
+# change fill of land, country lines, colour of background #
+dev.new(width = 5, height = 3)#
+base <- ggplot() +#
+  geom_polygon(aes(long.recenter,lat,group=group.regroup), #
+		size = 0.2, fill="white", colour = "grey95", data=worldmap) +#
+  ylim(-60, 90) +#
+  coord_equal() + #
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + #
+  geom_raster(aes(long.recenter, Latitude, fill = MAP), data = df) +#
+  scale_fill_gradient("Bleaching probability", limits = c(0,1), low = "blue", high = "red")       #
+base
+base
+base <- ggplot() +#
+  geom_polygon(aes(long.recenter,lat,group=group.regroup), #
+		size = 0.2, fill="white", colour = "grey95", data=worldmap) +#
+  ylim(-60, 90) +#
+  coord_equal() + #
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + #
+  geom_raster(aes(long.recenter, Latitude, fill = MAP), data = df) +#
+  scale_fill_gradient("Bleaching probability", limits = c(0,1), low = "yellow", high = "red")       #
+base
+recenter longitude to match pacific-centred world map #
+#note center needs to be set the same here and in 0-global-base-map.R#
+center <- 195#
+df$long.recenter <-  ifelse(df$Longitude<center-180, df$Longitude+360, df$Longitude)#
+head(df)   #
+hist(df$long.recenter)    #
+# 2. Read in predictor variables cropped to reef pixels#
+# code below isn't work yet but placeholder for top variables from dredge models, AIC < 4#
+#autocorr<-raster(wv2[1], varname="autocorr")  #
+#diff_events_all<-raster(wv[1], varname="diff_events_all") #
+#diff_events_periodmax<-raster(wv[1], varname="diff_events_periodmax")  #
+#events_pos_all<-raster(wv[1], varname="events_pos_all")     #
+#NSE<-raster(wv[1], varname="NSE")    #
+#
+#read in Pacific-centred base layer map#
+#holy smokes source is cool (thanks Sean Anderson!)#
+setwd("/Users/emilydarling/Documents/Work/GitHub/PaperZero")  #
+source("0-global-base-map.R")#
+#
+#add raster to base map layer in ggplot  #
+#change colours and fills in geom_polygon#
+# change fill of land, country lines, colour of background #
+dev.new(width = 5, height = 3)#
+base <- ggplot() +#
+  geom_polygon(aes(long.recenter,lat,group=group.regroup), #
+		size = 0.2, fill="white", colour = "grey95", data=worldmap) +#
+  ylim(-60, 90) +#
+  coord_equal() + #
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + #
+  geom_raster(aes(long.recenter, Latitude, fill = MAP), data = df) +#
+  scale_fill_gradient("Bleaching probability", limits = c(0,1), low = "yellow", high = "red")       #
+base
+center <- 175#
+df$long.recenter <-  ifelse(df$Longitude<center-180, df$Longitude+360, df$Longitude)#
+head(df)   #
+hist(df$long.recenter)    #
+# 2. Read in predictor variables cropped to reef pixels#
+# code below isn't work yet but placeholder for top variables from dredge models, AIC < 4#
+#autocorr<-raster(wv2[1], varname="autocorr")  #
+#diff_events_all<-raster(wv[1], varname="diff_events_all") #
+#diff_events_periodmax<-raster(wv[1], varname="diff_events_periodmax")  #
+#events_pos_all<-raster(wv[1], varname="events_pos_all")     #
+#NSE<-raster(wv[1], varname="NSE")    #
+#
+#read in Pacific-centred base layer map#
+#holy smokes source is cool (thanks Sean Anderson!)#
+setwd("/Users/emilydarling/Documents/Work/GitHub/PaperZero")  #
+source("0-global-base-map.R")#
+#
+#add raster to base map layer in ggplot  #
+#change colours and fills in geom_polygon#
+# change fill of land, country lines, colour of background #
+dev.new(width = 5, height = 3)#
+base <- ggplot() +#
+  geom_polygon(aes(long.recenter,lat,group=group.regroup), #
+		size = 0.2, fill="white", colour = "grey95", data=worldmap) +#
+  ylim(-60, 90) +#
+  coord_equal() + #
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + #
+  geom_raster(aes(long.recenter, Latitude, fill = MAP), data = df) +#
+  scale_fill_gradient("Bleaching probability", limits = c(0,1), low = "yellow", high = "red")       #
+base
+center <- 165#
+df$long.recenter <-  ifelse(df$Longitude<center-180, df$Longitude+360, df$Longitude)#
+head(df)   #
+hist(df$long.recenter)    #
+# 2. Read in predictor variables cropped to reef pixels#
+# code below isn't work yet but placeholder for top variables from dredge models, AIC < 4#
+#autocorr<-raster(wv2[1], varname="autocorr")  #
+#diff_events_all<-raster(wv[1], varname="diff_events_all") #
+#diff_events_periodmax<-raster(wv[1], varname="diff_events_periodmax")  #
+#events_pos_all<-raster(wv[1], varname="events_pos_all")     #
+#NSE<-raster(wv[1], varname="NSE")    #
+#
+#read in Pacific-centred base layer map#
+#holy smokes source is cool (thanks Sean Anderson!)#
+setwd("/Users/emilydarling/Documents/Work/GitHub/PaperZero")  #
+source("0-global-base-map.R")#
+#
+#add raster to base map layer in ggplot  #
+#change colours and fills in geom_polygon#
+# change fill of land, country lines, colour of background #
+dev.new(width = 5, height = 3)#
+base <- ggplot() +#
+  geom_polygon(aes(long.recenter,lat,group=group.regroup), #
+		size = 0.2, fill="white", colour = "grey95", data=worldmap) +#
+  ylim(-60, 90) +#
+  coord_equal() + #
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + #
+  geom_raster(aes(long.recenter, Latitude, fill = MAP), data = df) +#
+  scale_fill_gradient("Bleaching probability", limits = c(0,1), low = "yellow", high = "red")       #
+base
+center <- 163#
+df$long.recenter <-  ifelse(df$Longitude<center-180, df$Longitude+360, df$Longitude)#
+head(df)   #
+#hist(df$long.recenter)    #
+# 2. Read in predictor variables cropped to reef pixels#
+# code below isn't work yet but placeholder for top variables from dredge models, AIC < 4#
+#autocorr<-raster(wv2[1], varname="autocorr")  #
+#diff_events_all<-raster(wv[1], varname="diff_events_all") #
+#diff_events_periodmax<-raster(wv[1], varname="diff_events_periodmax")  #
+#events_pos_all<-raster(wv[1], varname="events_pos_all")     #
+#NSE<-raster(wv[1], varname="NSE")    #
+#
+#read in Pacific-centred base layer map#
+#holy smokes source is cool (thanks Sean Anderson!)#
+setwd("/Users/emilydarling/Documents/Work/GitHub/PaperZero")  #
+source("0-global-base-map.R")#
+#
+#add raster to base map layer in ggplot  #
+#change colours and fills in geom_polygon#
+# change fill of land, country lines, colour of background #
+dev.new(width = 5, height = 3)#
+base <- ggplot() +#
+  geom_polygon(aes(long.recenter,lat,group=group.regroup), #
+		size = 0.2, fill="white", colour = "grey95", data=worldmap) +#
+  ylim(-60, 90) +#
+  coord_equal() + #
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + #
+  geom_raster(aes(long.recenter, Latitude, fill = MAP), data = df) +#
+  scale_fill_gradient("Bleaching probability", limits = c(0,1), low = "yellow", high = "red")       #
+base
+heda(df)
+head(df)
+hist(df$MAP)
+ggplot() +#
+  	geom_histogram(aes(x = MAP), data = df)
+ggplot() +#
+  	geom_histogram(aes(x = MAP), data = df) +#
+	scale_x_continuous(expand = c(0,0), limits = c(0,1)) #
+	scale_y_continuous(expand = c(0,0), limits = c(0,100))
+ggplot() +#
+  	geom_histogram(aes(x = MAP), data = df) +#
+	scale_x_continuous(expand = c(0,0), limits = c(0,1)) #
+	scale_y_continuous(expand = c(0,0), limits = c(0,110))
+ggplot histogram of bleaching responses#
+ggplot() +#
+  	geom_histogram(aes(x = MAP), data = df) +#
+	scale_x_continuous(expand = c(0,0), limits = c(0,1)) + #
+	scale_y_continuous(expand = c(0,0), limits = c(0,110))
+ggplot() +#
+  	geom_histogram(aes(x = MAP), data = df) +#
+	scale_x_continuous(expand = c(0,0), limits = c(0,1)) + #
+	scale_y_continuous(expand = c(0,0), limits = c(0,120))
+quartz()#
+hist(df$MAP)
+ggplot() +#
+  	geom_histogram(aes(x = MAP), data = df, binwidth = 20) +#
+	scale_x_continuous(expand = c(0,0), limits = c(0,1)) + #
+	scale_y_continuous(expand = c(0,0), limits = c(0,120))
+ggplot() +#
+  	geom_histogram(aes(x = MAP), data = df, binwidth = 0.2) +#
+	scale_x_continuous(expand = c(0,0), limits = c(0,1)) + #
+	scale_y_continuous(expand = c(0,0), limits = c(0,120))
+ggplot() +#
+  	geom_histogram(aes(x = MAP), data = df, binwidth = 0.025) +#
+	scale_x_continuous(expand = c(0,0), limits = c(0,1)) + #
+	scale_y_continuous(expand = c(0,0), limits = c(0,120))
+ggplot() +#
+  	geom_histogram(aes(x = MAP), data = df, binwidth = 0.035) +#
+	scale_x_continuous(expand = c(0,0), limits = c(0,1)) + #
+	scale_y_continuous(expand = c(0,0), limits = c(0,120))
+ggplot() +#
+  	geom_histogram(aes(x = MAP), data = df, binwidth = 0.055) +#
+	scale_x_continuous(expand = c(0,0), limits = c(0,1)) + #
+	scale_y_continuous(expand = c(0,0), limits = c(0,120))
+ggplot() +#
+  	geom_histogram(aes(x = MAP), data = df, binwidth = 0.055) +#
+	scale_x_continuous(expand = c(0,0), limits = c(0,1)) + #
+	scale_y_continuous(expand = c(0,0), limits = c(0,200))
+ggplot histogram of bleaching responses#
+ggplot() +#
+  	geom_histogram(aes(x = MAP), data = df, binwidth = 0.045) +#
+	scale_x_continuous(expand = c(0,0), limits = c(0,1)) + #
+	scale_y_continuous(expand = c(0,0), limits = c(0,200))
+ggplot() +#
+  	geom_density(aes(x = MAP), data = df) +#
+	scale_x_continuous(expand = c(0,0), limits = c(0,1)) + #
+	scale_y_continuous(expand = c(0,0), limits = c(0,200))
+ggplot() +#
+  	geom_density(aes(x = MAP), data = df) +#
+	scale_x_continuous(expand = c(0,0), limits = c(0,1)) + #
+	scale_y_continuous(expand = c(0,0), limits = c(0,1))
+ggplot histogram of bleaching responses#
+ggplot() +#
+  	geom_density(aes(x = MAP), data = df) +#
+	scale_x_continuous(expand = c(0,0), limits = c(0,1))
+ggplot() +#
+  	geom_density(aes(x = MAP), data = df)
+plot histogram of bleaching responses#
+ggplot() +#
+  	geom_density(aes(x = MAP), data = df, fill = "yellow")
+ggplot() +#
+  	geom_density(aes(x = MAP), data = df, fill = "yellow") +#
+	scale_x_continuous(expand = c(0,0), limits = c(0,1))
+ggplot() +#
+  	geom_density(aes(x = MAP), data = df, fill = "yellow") +#
+	scale_x_continuous(expand = c(0,0), limits = c(0,1)) +#
+	scale_y_continuous(expand = c(0,0), limits = c(0,2))
+quantile(df$MAP, probs = seq(0,1,0.25))
+quantile(df$MAP, probs = c(0.25,0.5,0.75,0.9,0.95,1))
+qqnorm(df$MAP)
+quantile(df$MAP, probs = c(0.05, 0.1, 0.25,0.5,0.75,0.9,0.95,1))
+ggplot histogram of bleaching responses#
+ggplot() +#
+  	geom_density(aes(x = MAP), data = df, fill = "yellow", alpha = 0.65) +#
+	scale_x_continuous(expand = c(0,0), limits = c(0,1)) +#
+	scale_y_continuous(expand = c(0,0), limits = c(0,2))
+df_low5 <- subset(df, MAP <= 0.2341578)
+nrow()
+nrow(df_low5)
+base <- ggplot() +#
+  geom_polygon(aes(long.recenter,lat,group=group.regroup), #
+		size = 0.2, fill="white", colour = "grey95", data=worldmap) +#
+  ylim(-60, 90) +#
+  coord_equal() + #
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + #
+  geom_raster(aes(long.recenter, Latitude), fill = "yellow", data = df_low5)    #
+base
+base <- ggplot() +#
+  geom_polygon(aes(long.recenter,lat,group=group.regroup), #
+		size = 0.2, fill="white", colour = "grey95", data=worldmap) +#
+  ylim(-60, 90) +#
+  coord_equal() + #
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + #
+  geom_raster(aes(long.recenter, Latitude), fill = "orange", data = df_low5)    #
+base
+quantile(df$MAP, probs = c(0.05, 0.1, 0.25,0.5,0.75,0.9,0.95,1))
+df_low10 <- subset(df, MAP <= 0.2822130)#
+nrow(df_low10)                         #
+#
+base <- ggplot() +#
+  geom_polygon(aes(long.recenter,lat,group=group.regroup), #
+		size = 0.2, fill="white", colour = "grey95", data=worldmap) +#
+  ylim(-60, 90) +#
+  coord_equal() + #
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + #
+  geom_raster(aes(long.recenter, Latitude), fill = "orange", data = df_low10)    #
+base
+nrow(df)
+df_low25 <- subset(df, MAP <= 0.3763596)#
+nrow(df_low25)   #
+#
+nrow(df)                      #
+#
+base <- ggplot() +#
+  geom_polygon(aes(long.recenter,lat,group=group.regroup), #
+		size = 0.2, fill="white", colour = "grey95", data=worldmap) +#
+  ylim(-60, 90) +#
+  coord_equal() + #
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + #
+  geom_raster(aes(long.recenter, Latitude), fill = "orange", data = df_low25)    #
+base
+base <- ggplot() +#
+  geom_polygon(aes(long.recenter,lat,group=group.regroup), #
+		size = 0.2, fill="white", colour = "grey95", data=worldmap) +#
+  ylim(-60, 90) +#
+  coord_equal() + #
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + #
+  geom_raster(aes(long.recenter, Latitude), fill = "orange", data = df_low5)    #
+base
+rm(list=ls())#
+library(rgeos)#
+library(raster)#
+library(rgdal)#
+library(dismo)#
+library(SDMTools)#
+#
+# Created by:    Joseph Maina#
+# Created:       25 March 2015#
+# Last modified: 1 April 2015#
+# Purpose:       analysis of multiband climate wavelets from ERSSTv4 data        #
+#
+#Emily's dropbox#
+setwd("/Users/emilydarling/Dropbox/1-On the go/Coral Database/PaperZero/Analysis/world/SSTanom_from1910_ERSSTv4/")
+bl<-read.csv('CoralBleaching.csv')#
+head(bl)#
+##lh<-read.csv('data.csv')#
+wv<-list.files(pattern=".updated.nc$")#
+##[2015-03-14, 10:22:23 PM] Maina: wv<-list.files(pattern='nc')#
+##[2015-03-14, 10:22:34 PM] Maina: that just lists all the files with nc extension#
+##then the file we want is position 9  #
+##but THIS POSITION CAN CHANGE, check [#] - which changes as we add more nc files     #
+###load the netcdf file as a multiband image with wavelet variables   #
+##[2015-03-14, 10:19:34 PM] Maina: it doesn't like the nc file to be called dirctly#
+##[2015-03-14, 10:20:37 PM] Maina: so we have to use for example wv[9] to call the wavelet rasterstack#
+names(wv)                                                                #
+names<-stack(wv) ##get names#
+period_max<-raster(wv[1], varname="period_max")#
+pct_signif_periodmax<-raster(wv[1], varname="pct_signif_periodmax")#
+pct_coi_periodmax<-raster(wv[1], varname="pct_coi_periodmax")#
+pct_ispos_signif<-raster(wv[1], varname="pct_ispos_signif")#
+events_pos_periodmax<-raster(wv[1], varname="events_pos_periodmax")#
+events_neg_periodmax<-raster(wv[1], varname="events_neg_periodmax")#
+events_pos_all<-raster(wv[1], varname="events_pos_all")#
+events_neg_all<-raster(wv[1], varname="events_neg_all")#
+maxpower_pos<-raster(wv[1], varname="maxpower_pos")#
+maxpower_neg<-raster(wv[1], varname="maxpower_neg")#
+maxpower_events_pos<-raster(wv[1], varname="maxpower_events_pos")#
+maxpower_events_neg<-raster(wv[1], varname="maxpower_events_neg")#
+maxpower_pos_norm<-raster(wv[1], varname="maxpower_pos_norm")#
+maxpower_neg_norm<-raster(wv[1], varname="maxpower_neg_norm")#
+maxpower_events_pos_norm<-raster(wv[1], varname="maxpower_events_pos_norm")#
+maxpower_events_neg_norm<-raster(wv[1], varname="maxpower_events_neg_norm")#
+period_events_pos<-raster(wv[1], varname="period_events_pos")#
+period_events_neg<-raster(wv[1], varname="period_events_neg")#
+duration_events_pos<-raster(wv[1], varname="duration_events_pos")#
+duration_events_neg<-raster(wv[1], varname="duration_events_neg")#
+meanSST<-raster(wv[1], varname="meanSST")#
+varSST<-raster(wv[1], varname="varSST")#
+trendSST<-raster(wv[1], varname="trendSST")#
+var_seasonal<-raster(wv[1], varname="var_seasonal")#
+pct_seasonal<-raster(wv[1], varname="pct_seasonal")#
+autocorr<-raster(wv[1], varname="autocorr")#
+NSE<-raster(wv[1], varname="NSE")#
+diff_events_periodmax<-raster(wv[1], varname="diff_events_periodmax")#
+diff_events_all<-raster(wv[1], varname="diff_events_all")#
+NSE_trend<-raster(wv[1], varname="NSE_trend")#
+autocorr_trend<-raster(wv[1], varname="autocorr_trend")#
+events_pos_all_trend<-raster(wv[1], varname="events_pos_all_trend")#
+maxpower_events_pos_trend<-raster(wv[1], varname="maxpower_events_pos_trend")#
+#
+##this creates a rasterstack of all the images loaded above.the names between the parethesis should match the names of rasters loaded above#
+##all.var below is a rasterstack of wavelet variables  #
+all.var<-stack(period_max, pct_signif_periodmax, pct_coi_periodmax, pct_ispos_signif, events_pos_periodmax, events_neg_periodmax, events_pos_all, events_neg_all, maxpower_pos, maxpower_neg, maxpower_events_pos, maxpower_events_neg, maxpower_pos_norm, maxpower_neg_norm, maxpower_events_pos_norm, maxpower_events_neg_norm, period_events_pos, period_events_neg, duration_events_pos, duration_events_neg, meanSST, varSST, trendSST, var_seasonal, pct_seasonal, autocorr, NSE, diff_events_periodmax, diff_events_all, NSE_trend, autocorr_trend, events_pos_all_trend, maxpower_events_pos_trend)
+reef.layer<-raster("reef_1x1.nc")#
+#
+reef.layer<-rotate(reef.layer)#
+all.var.r <- resample(all.var, reef.layer, method='bilinear')#
+#
+all.var.reef<-mask(all.var.r, reef.layer)
+all.var.reef
+names(nc$var)
+names(all.var.reef)
+autocorr<-raster(all.var.reef[26], varname="autocorr")
+autocorr<-raster(all.var.reef[26])
+autocorr.p <- rasterToPoints(autocorr)
+autocorr.p <- rasterToPoints(autocorr) #
+autocorr_df <- data.frame(autocorr.p)
+head(autocorr_df)
+autocorr<-raster(all.var.reef[26])  #
+#diff_events_all<-raster(wv[1], varname="diff_events_all") #
+#diff_events_periodmax<-raster(wv[1], varname="diff_events_periodmax")  #
+#events_pos_all<-raster(wv[1], varname="events_pos_all")     #
+#NSE<-raster(wv[1], varname="NSE")     #
+#
+#process raster into map#
+autocorr.p <- rasterToPoints(autocorr) #
+autocorr_df <- data.frame(autocorr.p)#
+head(autocorr_df)
+lapply(all.var.reef, as.data.frame)
+print(all.var.reef   )
+all.var.reef
+print(c(filename(all.var.reef), hasValues(all.var.reef), inMemory(all.var.reef)))
+levelplot(all.var.reef)
+test <- as.matrix(all.var.reef)
+head(test)
+test
+lh<-read.csv('data.csv')#
+wv<-list.files(pattern=".updated.nc$")#
+##[2015-03-14, 10:22:23 PM] Maina: wv<-list.files(pattern='nc')#
+##[2015-03-14, 10:22:34 PM] Maina: that just lists all the files with nc extension#
+##then the file we want is position 9  #
+##but THIS POSITION CAN CHANGE, check [#] - which changes as we add more nc files     #
+###load the netcdf file as a multiband image with wavelet variables   #
+##[2015-03-14, 10:19:34 PM] Maina: it doesn't like the nc file to be called dirctly#
+##[2015-03-14, 10:20:37 PM] Maina: so we have to use for example wv[9] to call the wavelet rasterstack#
+wv#
+names(wv)
+print(wv)
+names<-stack(wv) ##get names
+names
+autocorr<-raster(all.var.reef[[26]])
+autocorr.p <- rasterToPoints(autocorr) #
+autocorr_df <- data.frame(autocorr.p)#
+head(autocorr_df)
+nlayers(all.var.reef)
+nlayers(all.var.reef)
+names(all.var.reef)
+autocorr<-extraxt(all.var.reef, 26)
+autocorr<-extract(all.var.reef, 26)
+process raster into map#
+autocorr.p <- rasterToPoints(autocorr) #
+autocorr_df <- data.frame(autocorr.p)#
+head(autocorr_df)
+head(autocorr)
+all.var.reef[[26]]
+autocorr <- all.var.reef[[26]]
+nlayers(all.var.reef)
+autocorr <- raster(all.var.reef[[26]])
+autocorr
+autocorr.p <- rasterToPoints(autocorr)
+autocorr_df <- data.frame(autocorr.p)
+head(autocorr_df)
+histogram(autocorr)
+autocorr <- raster(all.var.reef[[26]])#
+autocorr #
+histogram(autocorr)
+plot(autocorr)
+all.var.reef
+all.var.reef  #
+#print(c(hasValues(all.var.reef), inMemory(all.var.reef)))  #
+nlayers(all.var.reef) #
+names(all.var.reef)
+autocorr<-extract(all.var.reef, 26)  #
+head(autocorr)
+autocorr<-subset(all.var.reef, 26)
+head(autocorr)
+autocorr<-raster(all.var.reef, 26)
+head(autocorr)
+autocorr<-raster(all.var.reef [[26]])
+head(autocorr)
+plot(all.var.reef, 26)
+rasterToPoints(all.var.reef, 26)
+rasterToPoints(all.var.reef)
+test <- rasterToPoints(all.var.reef)
+head(test)
+center <- 163#
+df$long.recenter <-  ifelse(df$Longitude<center-180, df$Longitude+360, df$Longitude)#
+head(df)
+head(test)
+name(test)[1:2] <- c("Longitude", "Latitude")
+names(test)[1:2] <- c("Longitude", "Latitude")
+names(test)
+head(test)
+names(test)[1] <- "Longitude"
+head(test)
+is.data.frame(test)
+as.data.frame(test)
+is.data.frame(test)
+as.data.frame(test)
+all.var.reef  #
+#print(c(hasValues(all.var.reef), inMemory(all.var.reef)))  #
+nlayers(all.var.reef) #
+names(all.var.reef)
+plot(all.var.reef, 26)
+test <- rasterToPoints(all.var.reef) #
+head(test)
+nrow(test)
+as.matrix(test)
+test <- as.data.frame(test)
+is.data.frame(test)
+names(test)[1:2] <- c("Longitude","Latitude")
+head(test)
+recenter longitude to match pacific-centred world map #
+#note center needs to be set the same here and in 0-global-base-map.R#
+center <- 163#
+test$long.recenter <-  ifelse(test$Longitude<center-180, test$Longitude+360, test$Longitude)#
+head(test)   #
+#hist(df$long.recenter)
+hist(test$long.recenter)
+base <- ggplot() +#
+  geom_polygon(aes(long.recenter,lat,group=group.regroup), #
+		size = 0.2, fill="white", colour = "grey95", data=worldmap) +#
+  ylim(-60, 90) +#
+  coord_equal() + #
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + #
+  geom_raster(aes(long.recenter, Latitude, fill = autocorr), data = test) +#
+  scale_fill_gradient("Bleaching probability", limits = c(0,1), low = "yellow", high = "red")       #
+base
+read in Pacific-centred base layer map#
+#holy smokes source is cool (thanks Sean Anderson!)#
+setwd("/Users/emilydarling/Documents/Work/GitHub/PaperZero")  #
+source("0-global-base-map.R")  #
+#
+base <- ggplot() +#
+  geom_polygon(aes(long.recenter,lat,group=group.regroup), #
+		size = 0.2, fill="white", colour = "grey95", data=worldmap) +#
+  ylim(-60, 90) +#
+  coord_equal() + #
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + #
+  geom_raster(aes(long.recenter, Latitude, fill = autocorr), data = test) +#
+  scale_fill_gradient("Bleaching probability", limits = c(0,1), low = "yellow", high = "red")       #
+base
+base <- ggplot() +#
+  geom_polygon(aes(long.recenter,lat,group=group.regroup), #
+		size = 0.2, fill="white", colour = "grey95", data=worldmap) +#
+  ylim(-60, 90) +#
+  coord_equal() + #
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + #
+  geom_raster(aes(long.recenter, Latitude, fill = autocorr), data = test) +#
+  scale_fill_gradient("Autocorr", limits = c(0,1), low = "yellow", high = "red")       #
+base
+densityplot(test$autocorr)
+base <- ggplot() +#
+  geom_polygon(aes(long.recenter,lat,group=group.regroup), #
+		size = 0.2, fill="white", colour = "grey95", data=worldmap) +#
+  ylim(-60, 90) +#
+  coord_equal() + #
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + #
+  geom_raster(aes(long.recenter, Latitude, fill = diff_events_all), data = test) +#
+  scale_fill_gradient("Difference events_all", limits = c(0,1), low = "yellow", high = "red")       #
+base
+test[which(is.na(test$diff_events_all)),]
+test[is.na(test$diff_events_all),]
+test$diff_events_all
+diff_events_all#
+base <- ggplot() +#
+  geom_polygon(aes(long.recenter,lat,group=group.regroup), #
+		size = 0.2, fill="white", colour = "grey95", data=worldmap) +#
+  ylim(-60, 90) +#
+  coord_equal() + #
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + #
+  geom_raster(aes(long.recenter, Latitude, fill = diff_events_all), data = test) +#
+  scale_fill_gradient("Difference events_all", low = "yellow", high = "red")       #
+base
+densityplot(test$diff_events_all)
+base

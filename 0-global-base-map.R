@@ -7,7 +7,8 @@ library(plyr)
 # Purpose:       global Pacific-centred map in R as base layer for rasters in ggplot
 
 #http://web.stanford.edu/~cengel/cgi-bin/anthrospace/great-circles-on-a-recentered-worldmap-in-ggplot
-center <- 115 # positive values only - US centered view is 260
+#center <- 115
+center <- 163 # positive values only - US centered view is 260
 # shift coordinates to recenter worldmap
 worldmap <- map_data ("world")
 worldmap$long.recenter <-  ifelse(worldmap$long  < center - 180 , worldmap$long + 360, worldmap$long)
