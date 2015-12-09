@@ -15,10 +15,13 @@ library(sp)
 library(rgeos)
 library(rgdal)
 library(dismo)
-library(SDMTools)   
+library(SDMTools)  
+
+library(ellipse)  
+library(grid)
 print("loaded from PaperZero .Rprofile")
 
-#install.packages("rgeos")
+#install.packages("ellipse")
 #remove.packages("sp")
 
 #.libPaths()
